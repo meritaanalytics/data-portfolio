@@ -1,0 +1,15 @@
+# secrets
+.env
+*.pem
+*.json.key
+# data (keep out of git)
+data/
+*.csv
+*.parquet
+# python
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+# power bi cache
+*.pbix.tmp
+.DS_Store

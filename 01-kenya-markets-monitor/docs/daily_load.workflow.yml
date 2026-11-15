@@ -1,0 +1,22 @@
+# Copy this file to:  .github/workflows/daily_load.yml  (repo root) before pushing.
+name: daily-fx-load
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"   # 08:00 UTC, weekdays (UTC; may start late)
+  workflow_dispatch:
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 01-kenya-markets-monitor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests psycopg2-binary
+      - run: python src/load_fx.py
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          FX_API_URL: ${{ secrets.FX_API_URL }}
